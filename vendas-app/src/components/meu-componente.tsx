@@ -17,8 +17,7 @@ const MeuComponente : React.FC =  () => {
 
     return (
         <div className="MeuComponente">
-            <p>{message}</p>
-            <Mensagem mensagem="Olá Marilene" />
+            <Mensagem mensagem={message} />
         </div>
     )
 }
