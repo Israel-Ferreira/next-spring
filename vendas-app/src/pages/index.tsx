@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import MeuComponente from '../components/meu-componente'
 
 
 
@@ -14,6 +15,7 @@ const Home: NextPage = () => {
 
       <main>
         <h2>Bem vindo</h2>
+        <MeuComponente />
       </main>
     </div>
   )
