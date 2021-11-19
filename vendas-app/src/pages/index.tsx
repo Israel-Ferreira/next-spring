@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Button from '../components/button'
 import MeuComponente from '../components/meu-componente'
 
+import {Layout} from 'components'
 
 
 const Home: NextPage = () => {
@@ -13,8 +15,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Layout />
+
       <main>
         <h2>Bem vindo</h2>
+        <Button color="info" clickEvent={() => console.log("Teste")} />
         <MeuComponente />
       </main>
     </div>
