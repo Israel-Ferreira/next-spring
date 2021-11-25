@@ -1,11 +1,14 @@
 import React, { Fragment } from "react"
 import Card from "./card"
 
+import Menu from './Menu'
+
 
 const Layout : React.FC = props => (
     <div className="app">
         <section className="main columns is-fullheight">
             {/* Menu */}
+            <Menu title="Minhas Vendas" />
 
             <div className="container column is-10">
                 <div className="section">
