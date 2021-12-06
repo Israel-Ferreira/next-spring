@@ -2,7 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 
-import {Layout} from 'components'
+import { Layout } from 'components'
+import Card from 'components/layout/card'
 
 
 const Home: NextPage = () => {
@@ -14,7 +15,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout />
+      <Layout>
+
+        <Card cardHeaderTitle="Teste">
+          <h4>Teste</h4>
+        </Card>
+        <Card cardHeaderTitle="Teste 2">
+          <h1>Teste</h1>
+        </Card>
+      </Layout>
 
     </div>
   )

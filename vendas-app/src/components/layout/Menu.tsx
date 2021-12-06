@@ -13,7 +13,9 @@ const Menu: React.FC<MenuProps> = (props) => (
                 <MenuItem subtitle="Home" iconClass="" pathLink="#" />
                 <MenuItem subtitle="Cadastros" iconClass="" pathLink="#" />
                 <MenuItem subtitle="Clientes" iconClass="" pathLink="#" />
+                <MenuItem subtitle="Produtos" iconClass="" pathLink="#" />
                 <MenuItem subtitle="Config" iconClass="" pathLink="#" />
+                <MenuItem subtitle="Sair" iconClass="" pathLink="#" />
             </ul>
         </aside>
     </Fragment>
