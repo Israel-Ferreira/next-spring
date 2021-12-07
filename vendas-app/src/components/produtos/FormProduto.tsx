@@ -37,15 +37,27 @@ const FormProduto: React.FC = props => {
     return (
         <Fragment>
             <div className="FormProduto">
-                <ProdutoField labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
-                <ProdutoField labelText="Preço" placeholder="Digite o preço" isNumeric={true} onChangeValue={e => console.log(e.target.value)} />
-                <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={e => console.log(e.target.value)} />
-                <div className="field">
-                    <label htmlFor="" className="label">Descrição</label>
-                    <div className="control">
-                        <textarea name="" id="" cols={30} rows={10} className="textarea" onChange={changeDescription} ></textarea>
+
+                <div className="columns">
+                    <ProdutoField columnSize="6" labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
+                    <ProdutoField columnSize="6" labelText="Preço" placeholder="Digite o preço" isNumeric={true} onChangeValue={e => console.log(e.target.value)} />
+                </div>
+
+                <div className="columns">
+                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={e => console.log(e.target.value)} />
+                </div>
+
+                <div className="columns">
+                    <div className="field column is-full">
+                        <label htmlFor="" className="label">Descrição</label>
+                        <div className="control">
+                            <textarea name="" id="" cols={30} rows={10} className="textarea" onChange={changeDescription} ></textarea>
+                        </div>
                     </div>
                 </div>
+
+
+
                 <div className="field is-grouped">
                     <div className="control">
                         <button className="button is-link" onClick={e => console.log(`${productName} - ${price}`)} >Salvar</button>

@@ -6,6 +6,7 @@ type FieldProdutoProps = {
     onChangeValue: ChangeEventHandler;
     placeholder: string;
     isNumeric: boolean;
+    columnSize?: string
     min?: number
     max?: number
 }
@@ -13,7 +14,7 @@ type FieldProdutoProps = {
 
 const ProdutoField: React.FC<FieldProdutoProps> = props => {
     return (
-        <div className="field">
+        <div className={`field column is-${props.columnSize ? props.columnSize : 'full'}`}>
             <label className="label">{props.labelText}</label>
             {props.isNumeric}
 
