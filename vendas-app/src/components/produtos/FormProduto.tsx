@@ -2,6 +2,7 @@ import Produto from 'models/produto'
 import React, { ChangeEvent, Fragment, useState } from 'react'
 import ProdutoField from './ProdutoField'
 
+import Link from 'next/link'
 
 
 const FormProduto: React.FC = props => {
@@ -75,7 +76,11 @@ const FormProduto: React.FC = props => {
                     </div>
 
                     <div className="control">
-                        <button className="button is-danger">Voltar</button>
+                        <button className="button is-danger">
+                            <Link href="/">
+                                voltar
+                            </Link>
+                        </button>
                     </div>
                 </div>
             </div>
