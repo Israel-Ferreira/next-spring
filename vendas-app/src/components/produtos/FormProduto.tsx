@@ -1,3 +1,4 @@
+import Produto from 'models/produto'
 import React, { ChangeEvent, Fragment, useState } from 'react'
 import ProdutoField from './ProdutoField'
 
@@ -18,19 +19,29 @@ const FormProduto: React.FC = props => {
 
     const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         console.log(e.target.value)
-        setSku(e.target.value)
+        setDescription(e.target.value)
+    }
+
+    const changeProductName = (e: ChangeEvent<HTMLInputElement>) => {
+        setProductName(e.target.value)
     }
 
     const changePriceValue = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
+        let priceVal = parseFloat(value)
+        setPrice(priceVal)
+    }
 
-        if (parseFloat(value)) {
-            let priceVal = parseFloat(value)
-            setPrice(priceVal)
-        } else {
-            alert()
+
+    const submit = () => {
+        const produto : Produto = {
+            name: productName,
+            description,
+            price,
+            sku
         }
 
+        console.log(produto)
     }
 
 
@@ -39,19 +50,19 @@ const FormProduto: React.FC = props => {
             <div className="FormProduto">
 
                 <div className="columns">
-                    <ProdutoField columnSize="6" labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
-                    <ProdutoField columnSize="6" labelText="Preço" placeholder="Digite o preço" isNumeric={true} onChangeValue={e => console.log(e.target.value)} />
+                    <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
+                    <ProdutoField columnSize="6" labelText="Preço" placeholder="Digite o preço" isNumeric={true} onChangeValue={changePriceValue} />
                 </div>
 
                 <div className="columns">
-                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={e => console.log(e.target.value)} />
+                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={changeProductName} />
                 </div>
 
                 <div className="columns">
                     <div className="field column is-full">
                         <label htmlFor="" className="label">Descrição</label>
                         <div className="control">
-                            <textarea name="" id="" cols={30} rows={10} className="textarea" onChange={changeDescription} ></textarea>
+                            <textarea name="" id="" cols={30} rows={10} className="textarea" value={description} onChange={changeDescription} ></textarea>
                         </div>
                     </div>
                 </div>
@@ -60,7 +71,7 @@ const FormProduto: React.FC = props => {
 
                 <div className="field is-grouped">
                     <div className="control">
-                        <button className="button is-link" onClick={e => console.log(`${productName} - ${price}`)} >Salvar</button>
+                        <button className="button is-link" onClick={submit} >Salvar</button>
                     </div>
 
                     <div className="control">

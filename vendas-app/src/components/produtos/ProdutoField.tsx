@@ -9,6 +9,7 @@ type FieldProdutoProps = {
     columnSize?: string
     min?: number
     max?: number
+    value?: any
 }
 
 
@@ -22,11 +23,11 @@ const ProdutoField: React.FC<FieldProdutoProps> = props => {
 
             <div className="control">
                 <If condition={props.isNumeric}>
-                    <input type="number" min={props.min ? props.min : 0} className="input" placeholder={props.placeholder} onChange={props.onChangeValue} />
+                    <input type="number" min={props.min ? props.min : 0} className="input" placeholder={props.placeholder} value={props.value} onChange={props.onChangeValue} />
                 </If>
 
                 <If condition={!props.isNumeric}>
-                    <input type="text" className="input" placeholder={props.placeholder} onChange={props.onChangeValue} />
+                    <input type="text" className="input" placeholder={props.placeholder} value={props.value} onChange={props.onChangeValue} />
                 </If>
 
 
