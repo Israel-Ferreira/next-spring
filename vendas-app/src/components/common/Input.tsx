@@ -1,22 +1,20 @@
-import React, { ChangeEventHandler, Fragment } from 'react';
+import React, { ChangeEventHandler, Fragment, InputHTMLAttributes } from 'react';
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelText: string;
     onChangeValue: ChangeEventHandler;
-    placeholder: string;
     columnSize?: string
-    value?: any
 }
 
 
 
-const Input: React.FC<InputProps> = props => (
+const Input: React.FC<InputProps> = ({columnSize, labelText, onChangeValue, ...props}) => (
     <Fragment>
-        <div className={`field column is-${props.columnSize ? props.columnSize : 'full'}`}>
-            <label className="label">{props.labelText}</label>
+        <div className={`field column is-${columnSize ? columnSize : 'full'}`}>
+            <label className="label">{labelText}</label>
 
             <div className="control">
-                <input type="text" className="input" placeholder={props.placeholder} value={props.value} onChange={props.onChangeValue} />
+                <input className="input" placeholder={props.placeholder} value={props.value} onChange={onChangeValue} {...props} />
             </div>
         </div>
     </Fragment>

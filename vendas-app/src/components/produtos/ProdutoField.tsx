@@ -18,10 +18,11 @@ const ProdutoField: React.FC<FieldProdutoProps> = props => {
     return (
         <Fragment>
             <If condition={props.isNumeric}>
-                <NumberInput
+                <Input
                     labelText={props.labelText}
                     onChangeValue={props.onChangeValue}
                     placeholder={props.placeholder}
+                    type="number"
                     value={props.value}
                     columnSize={`is-${props.columnSize ? props.columnSize : 'full'}`}
                     min={props.min ? props.min : 0}
