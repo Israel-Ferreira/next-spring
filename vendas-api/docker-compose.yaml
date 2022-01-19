@@ -1,0 +1,39 @@
+version: '3.0'
+
+services:
+  postgres-db:
+    image: postgres
+    container_name: vendas-db
+    ports:
+      - 25432:5432
+
+    networks:
+      - vendas-net
+    
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "pg_dumbo_1234"
+      POSTGRES_DB: "vendas-db"
+
+  
+  pg-admin:
+    image: dpage/pgadmin4
+    container_name: vendas-pg-admin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin123
+
+    networks:
+      - vendas-net
+
+    ports:
+      - 18090:80
+
+    
+
+
+    
+
+networks:
+  vendas-net:
+    driver: bridge
