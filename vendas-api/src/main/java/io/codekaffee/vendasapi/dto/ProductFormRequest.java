@@ -6,14 +6,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class ProductFormRequest {
+
+    @NotNull
+    @NotBlank
     private String sku;
 
+    @NotNull
+    @NotBlank
     @JsonProperty(value = "name")
     private String productName;
-    
+
+    @NotNull
     private String description;
 
+    @DecimalMin(value = "0.00")
     private BigDecimal price;
 
     public String getSku() {

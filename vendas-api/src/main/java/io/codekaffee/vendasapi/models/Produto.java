@@ -1,5 +1,7 @@
 package io.codekaffee.vendasapi.models;
 
+import io.codekaffee.vendasapi.dto.ProductFormRequest;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -30,6 +32,16 @@ public class Produto implements Serializable {
     @Column(precision = 16, scale = 2)
     private BigDecimal preco;
 
+
+    public Produto() {
+    }
+
+    public Produto(ProductFormRequest productFormRequest) {
+        this.nome = productFormRequest.getProductName();
+        this.descricao = productFormRequest.getDescription();
+        this.preco = productFormRequest.getPrice();
+        this.sku = productFormRequest.getSku();
+    }
 
     public Long getId() {
         return id;
