@@ -5,6 +5,7 @@ import io.codekaffee.vendasapi.dto.ProductFormRequest;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +33,10 @@ public class Produto implements Serializable {
 
     @Column(name = "PRECO", precision = 16, scale = 2)
     private BigDecimal preco;
+
+
+    @Column(name = "DATA_CADASTRO")
+    private LocalDate dataCadastro;
 
 
     public Produto() {
@@ -84,6 +89,19 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+
+    @PrePersist
+    private void addDataCadastro() {
+        this.dataCadastro = LocalDate.now();
+    }
 
     @Override
     public boolean equals(Object o) {
