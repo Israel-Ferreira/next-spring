@@ -1,5 +1,6 @@
 package io.codekaffee.vendasapi.controllers;
 
+import io.codekaffee.vendasapi.dto.ProductResp;
 import io.codekaffee.vendasapi.models.Produto;
 import io.codekaffee.vendasapi.services.CreateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,11 @@ public class ProductController {
     
 
     @PostMapping
-    public ResponseEntity<Produto> createProduct(@RequestBody ProductFormRequest productFormRequest) {
+    public ResponseEntity<ProductResp> createProduct(@RequestBody ProductFormRequest productFormRequest) {
         Produto produto = createProductService.createProduct(productFormRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+        var resp = new ProductResp(produto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 }
