@@ -14,22 +14,23 @@ public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
-    @Column(length = 100)
+    @Column(length = 100, name = "NOME")
     private String nome;
 
 
-    @Column(unique = true)
+    @Column(name = "SKU", unique = true)
     private String sku;
 
-    @Column(length = 265)
+    @Column(name = "DESCRICAO", length = 255)
     private String descricao;
 
 
-    @Column(precision = 16, scale = 2)
+    @Column(name = "PRECO", precision = 16, scale = 2)
     private BigDecimal preco;
 
 
