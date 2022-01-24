@@ -1,8 +1,8 @@
 interface Produto {
-    name: string;
-    price: number;
-    sku: string;
-    description: string;
+    nome?: string;
+    preco?: number;
+    sku?: string;
+    descricao?: string;
 }
 
 export default Produto

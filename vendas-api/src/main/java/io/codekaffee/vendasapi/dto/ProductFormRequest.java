@@ -18,12 +18,14 @@ public class ProductFormRequest {
 
     @NotNull
     @NotBlank
-    @JsonProperty(value = "name")
+    @JsonProperty(value = "nome")
     private String productName;
 
-    @NotNull
+
+    @JsonProperty(value = "descricao")
     private String description;
 
+    @JsonProperty(value = "preco")
     @DecimalMin(value = "0.00")
     private BigDecimal price;
 

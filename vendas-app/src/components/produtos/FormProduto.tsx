@@ -3,6 +3,7 @@ import React, { ChangeEvent, Fragment, useState } from 'react'
 import ProdutoField from './ProdutoField'
 
 import Link from 'next/link'
+import { useProdutoService } from 'app/services'
 
 
 const FormProduto: React.FC = props => {
@@ -12,14 +13,15 @@ const FormProduto: React.FC = props => {
 
     const [price, setPrice] = useState(0.00)
 
+
+    const {salvar} = useProdutoService()
+
     const changeSkuValue = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        console.log(`Valor Atual: ${sku}, Valor Futuro: ${value}`)
         setSku(value)
     }
 
     const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        console.log(e.target.value)
         setDescription(e.target.value)
     }
 
@@ -34,15 +36,22 @@ const FormProduto: React.FC = props => {
     }
 
 
-    const submit = () => {
+    const submit = async () => {
         const produto : Produto = {
-            name: productName,
-            description,
-            price,
+            nome: productName,
+            descricao: description,
+            preco: price,
             sku
         }
 
         console.log(produto)
+
+
+        const produtoResponse = await salvar(produto)
+
+        console.log(produtoResponse)
+
+
     }
 
 
