@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { Fragment } from 'react'
 
 type MenuItemProps = {
@@ -10,9 +11,11 @@ type MenuItemProps = {
 const MenuItem: React.FC<MenuItemProps> = props => (
     <Fragment>
         <li>
-            <a href={props.pathLink}>
-                <span className="icon"></span>{props.subtitle}
-            </a>
+        <Link href={props.pathLink}>
+                <a>
+                    <span className="icon"></span> { props.subtitle } 
+                </a>
+            </Link>
         </li>
     </Fragment>
 )

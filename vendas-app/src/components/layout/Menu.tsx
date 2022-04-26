@@ -10,12 +10,12 @@ const Menu: React.FC<MenuProps> = (props) => (
         <aside className="column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
             <p className="menu-label is-hidden-touch">{props.title}</p>
             <ul className="menu-list">
-                <MenuItem subtitle="Home" iconClass="" pathLink="#" />
-                <MenuItem subtitle="Cadastros" iconClass="" pathLink="#" />
-                <MenuItem subtitle="Clientes" iconClass="" pathLink="#" />
-                <MenuItem subtitle="Produtos" iconClass="" pathLink="#" />
-                <MenuItem subtitle="Config" iconClass="" pathLink="#" />
-                <MenuItem subtitle="Sair" iconClass="" pathLink="#" />
+                <MenuItem subtitle="Home" iconClass="" pathLink="/" />
+                <MenuItem subtitle="Produtos" iconClass="" pathLink="/cadastros/produtos" />
+                <MenuItem subtitle="Clientes" iconClass="" pathLink="/" />
+                <MenuItem subtitle="Produtos" iconClass="" pathLink="/" />
+                <MenuItem subtitle="Config" iconClass="" pathLink="/" />
+                <MenuItem subtitle="Sair" iconClass="" pathLink="/" />
             </ul>
         </aside>
     </Fragment>
