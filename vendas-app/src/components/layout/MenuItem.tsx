@@ -11,9 +11,9 @@ type MenuItemProps = {
 const MenuItem: React.FC<MenuItemProps> = props => (
     <Fragment>
         <li>
-        <Link href={props.pathLink}>
+            <Link href={props.pathLink}>
                 <a>
-                    <span className="icon"></span> { props.subtitle } 
+                    <span className="icon"></span> {props.subtitle}
                 </a>
             </Link>
         </li>

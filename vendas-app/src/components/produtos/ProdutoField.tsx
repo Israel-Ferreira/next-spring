@@ -5,7 +5,7 @@ import React, { ChangeEventHandler, Fragment } from "react";
 
 type FieldProdutoProps = {
     labelText: string;
-    onChangeValue: ChangeEventHandler;
+    onChangeValue?: ChangeEventHandler;
     placeholder: string;
     isNumeric: boolean;
     columnSize?: string
@@ -20,7 +20,7 @@ const ProdutoField: React.FC<FieldProdutoProps> = props => {
             <If condition={props.isNumeric}>
                 <Input
                     labelText={props.labelText}
-                    onChangeValue={props.onChangeValue}
+                    onChangeValue={props.onChangeValue? props.onChangeValue : () => {}}
                     placeholder={props.placeholder}
                     type="number"
                     value={props.value}
@@ -32,7 +32,7 @@ const ProdutoField: React.FC<FieldProdutoProps> = props => {
             <If condition={!props.isNumeric}>
                 <Input
                     labelText={props.labelText}
-                    onChangeValue={props.onChangeValue}
+                    onChangeValue={props.onChangeValue? props.onChangeValue : () => {}}
                     placeholder={props.placeholder}
                     value={props.value}
                     columnSize={`is-${props.columnSize ? props.columnSize : 'full'}`} />

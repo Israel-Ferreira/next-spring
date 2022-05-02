@@ -4,17 +4,21 @@ import ProdutoField from './ProdutoField'
 
 import Link from 'next/link'
 import { useProdutoService } from 'app/services'
+import Input from 'components/common/Input'
+import If from 'components/common/If'
 
 
 const FormProduto: React.FC = props => {
     const [sku, setSku] = useState('12345')
     const [productName, setProductName] = useState('')
     const [description, setDescription] = useState('')
+    const [id, setId] = useState<number>(0.00)
+    const [cadastro, setCadastro] = useState<string>("")
 
     const [price, setPrice] = useState(0.00)
 
 
-    const {salvar} = useProdutoService()
+    const { salvar } = useProdutoService()
 
     const changeSkuValue = (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -37,7 +41,7 @@ const FormProduto: React.FC = props => {
 
 
     const submit = async () => {
-        const produto : Produto = {
+        const produto: Produto = {
             nome: productName,
             descricao: description,
             preco: price,
@@ -49,6 +53,9 @@ const FormProduto: React.FC = props => {
 
         const produtoResponse = await salvar(produto)
 
+        setId(produtoResponse.id ? produtoResponse.id : 0)
+        setCadastro(produtoResponse.dataCriacao ? produtoResponse.dataCriacao : "dd/MM/yyyy");
+
         console.log(produtoResponse)
 
 
@@ -58,6 +65,28 @@ const FormProduto: React.FC = props => {
     return (
         <Fragment>
             <div className="FormProduto">
+
+                {cadastro && id ? 
+                    <div className="columns">
+                        <Input labelText="Código:"
+                            columnSize="is-half"
+                            value={id}
+                            id="inputId"
+                            disabled
+                            onChangeValue={() => { }}
+                        />
+
+                        <Input labelText="Data Cadastro:"
+                            columnSize="is-half"
+                            value={cadastro}
+                            id="inputDataCadastro"
+                            disabled
+                            onChangeValue={() => { }}
+                        />
+
+                    </div> : <></>
+                }
+
 
                 <div className="columns">
                     <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
