@@ -27,9 +27,12 @@ public class UpdateProductService {
             throw new NotFoundException();
         }
 
-        Produto produto = productFormRequest.toModel();
-        produto.setId(id);
+        Produto produto = produtoDb.get();
 
-
+        produto.setSku(productFormRequest.getSku());
+        produto.setPreco(productFormRequest.getPrice());
+        produto.setDescricao(productFormRequest.getDescription());
+        
+        produtoRepository.save(produto);
     }
 }

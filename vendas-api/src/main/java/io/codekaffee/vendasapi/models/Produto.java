@@ -103,6 +103,10 @@ public class Produto implements Serializable {
         this.dataCadastro = LocalDate.now();
     }
 
+
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
