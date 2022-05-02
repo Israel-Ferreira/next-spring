@@ -75,7 +75,7 @@ const FormProduto: React.FC = props => {
 
                 <div className="columns">
                     <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={setSku} />
-                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price}  currency />
+                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price}  currency maxLength={16} />
                 </div>
 
                 <div className="columns">
