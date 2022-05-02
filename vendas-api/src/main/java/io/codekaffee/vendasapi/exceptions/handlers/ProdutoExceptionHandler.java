@@ -2,6 +2,7 @@ package io.codekaffee.vendasapi.exceptions.handlers;
 
 import io.codekaffee.vendasapi.dto.ErrorMsg;
 import io.codekaffee.vendasapi.exceptions.CreateProductBadRequestException;
+import io.codekaffee.vendasapi.exceptions.NotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,16 @@ public class ProdutoExceptionHandler {
 
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMsg);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorMsg> handleNotFoundException(NotFoundException e) {
+        ErrorMsg errorMsg  = new ErrorMsg();
+
+        errorMsg.setMsg(e.getMessage());
+        errorMsg.setResponseStatus((long) HttpStatus.NOT_FOUND.value());
+
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMsg);
     }
 
 

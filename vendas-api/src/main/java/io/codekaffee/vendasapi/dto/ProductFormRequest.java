@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.codekaffee.vendasapi.models.Produto;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
@@ -71,7 +72,8 @@ public class ProductFormRequest {
         }
     }
 
-    
+    public Produto toModel() {
+        return new Produto(this);
+    }
 
- 
 }
