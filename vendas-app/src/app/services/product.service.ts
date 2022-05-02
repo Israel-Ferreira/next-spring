@@ -9,8 +9,13 @@ export const useProdutoService = () => {
     const salvar = async (produto : Produto) : Promise<Produto> =>  {
         const response : AxiosResponse<Produto> = await httpClient.post(resourceUrl, produto)
         return response.data
+    } 
+
+    const atualizar = async (id: number, produto: Produto) : Promise<void> => {
+        const updateUri =  `${resourceUrl}/${id}`
+        await httpClient.put(updateUri, produto)
     }
+    
 
-
-    return {salvar}
+    return {salvar, atualizar}
 }

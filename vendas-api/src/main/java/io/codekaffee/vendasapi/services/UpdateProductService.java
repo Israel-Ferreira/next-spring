@@ -32,7 +32,7 @@ public class UpdateProductService {
         produto.setSku(productFormRequest.getSku());
         produto.setPreco(productFormRequest.getPrice());
         produto.setDescricao(productFormRequest.getDescription());
-        
+
         produtoRepository.save(produto);
     }
 }

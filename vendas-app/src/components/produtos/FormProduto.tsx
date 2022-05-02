@@ -2,10 +2,11 @@ import Produto from 'models/produto'
 import React, { ChangeEvent, Fragment, useState } from 'react'
 import ProdutoField from './ProdutoField'
 
+import {converterEmBigDecimal, formatReal} from 'app/utils/money'
+
 import Link from 'next/link'
 import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
-import If from 'components/common/If'
 import ActionButtonForm from './ActionButtonForm'
 
 
@@ -18,47 +19,32 @@ const FormProduto: React.FC = props => {
 
     const [price, setPrice] = useState(0.00)
 
-
-    const { salvar } = useProdutoService()
-
-    const changeSkuValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setSku(value)
-    }
-
-    const changeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(e.target.value)
-    }
-
-    const changeProductName = (e: ChangeEvent<HTMLInputElement>) => {
-        setProductName(e.target.value)
-    }
-
-    const changePriceValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        let priceVal = parseFloat(value)
-        setPrice(priceVal)
-    }
-
+    const { salvar, atualizar } = useProdutoService()
 
     const submit = async () => {
         const produto: Produto = {
             nome: productName,
             descricao: description,
-            preco: price,
+            preco: converterEmBigDecimal(price),
             sku
         }
 
-        console.log(produto)
+        if(id){
+            atualizar(id, produto)
+                .then(_ => console.log("Produto Atualizado com sucesso"))
+                .catch(err => console.log(`Erro ao atualizar o produto: ${err}`))
+        }else{
+            console.log(produto)
+    
+            const produtoResponse = await salvar(produto)
 
-
-        const produtoResponse = await salvar(produto)
-
-        setId(produtoResponse.id ? produtoResponse.id : 0)
-        setCadastro(produtoResponse.dataCriacao ? produtoResponse.dataCriacao : "dd/MM/yyyy");
-
-        console.log(produtoResponse)
-
+            console.log(converterEmBigDecimal(`${produto.preco}`))
+    
+            setId(produtoResponse.id ? produtoResponse.id : 0)
+            setCadastro(produtoResponse.dataCriacao ? produtoResponse.dataCriacao : "dd/MM/yyyy");
+    
+            console.log(produtoResponse)
+        }
 
     }
 
@@ -74,7 +60,6 @@ const FormProduto: React.FC = props => {
                             value={id}
                             id="inputId"
                             disabled
-                            onChangeValue={() => { }}
                         />
 
                         <Input labelText="Data Cadastro:"
@@ -82,7 +67,6 @@ const FormProduto: React.FC = props => {
                             value={cadastro}
                             id="inputDataCadastro"
                             disabled
-                            onChangeValue={() => { }}
                         />
 
                     </div> : <></>
@@ -90,19 +74,19 @@ const FormProduto: React.FC = props => {
 
 
                 <div className="columns">
-                    <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={changeSkuValue} />
-                    <ProdutoField columnSize="6" labelText="Preço" placeholder="Digite o preço" isNumeric={true} onChangeValue={changePriceValue} />
+                    <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={setSku} />
+                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price}  currency />
                 </div>
 
                 <div className="columns">
-                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={changeProductName} />
+                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={setProductName} />
                 </div>
 
                 <div className="columns">
                     <div className="field column is-full">
                         <label htmlFor="" className="label">Descrição</label>
                         <div className="control">
-                            <textarea name="" id="" cols={30} rows={10} className="textarea" value={description} onChange={changeDescription} ></textarea>
+                            <textarea name="" id="" cols={30} rows={10} className="textarea" value={description} onChange={e => setDescription(e.target.value)} ></textarea>
                         </div>
                     </div>
                 </div>
