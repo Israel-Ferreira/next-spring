@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
 import If from 'components/common/If'
+import ActionButtonForm from './ActionButtonForm'
 
 
 const FormProduto: React.FC = props => {
@@ -110,7 +111,10 @@ const FormProduto: React.FC = props => {
 
                 <div className="field is-grouped">
                     <div className="control">
-                        <button className="button is-link" onClick={submit} >Salvar</button>
+                        {id ? 
+                            <ActionButtonForm label="Atualizar" onClick={submit} /> :
+                            <ActionButtonForm label="Salvar" onClick={submit} />
+                        }
                     </div>
 
                     <div className="control">
