@@ -8,6 +8,9 @@ import Link from 'next/link'
 import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
 import ActionButtonForm from './ActionButtonForm'
+import Message from 'components/common/Mensagem'
+
+
 
 
 const FormProduto: React.FC = props => {
@@ -53,6 +56,7 @@ const FormProduto: React.FC = props => {
         <Fragment>
             <div className="FormProduto">
 
+                <Message msgType='danger' field="Nome" text='Produto Atualizado com sucesso' />
                 {cadastro && id ? 
                     <div className="columns">
                         <Input labelText="Código:"
