@@ -7,6 +7,14 @@ interface MessageProps {
     text: string
 }
 
+export interface Alert {
+    msgType: string
+    field?: string
+    text: string
+}
+
+
+
 
 const Message: React.FC<MessageProps> = ({ text, msgType, field}) => {
     return (

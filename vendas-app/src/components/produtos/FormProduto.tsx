@@ -8,12 +8,18 @@ import Link from 'next/link'
 import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
 import ActionButtonForm from './ActionButtonForm'
-import Message from 'components/common/Mensagem'
+import Message, { Alert } from 'components/common/Mensagem'
+
+
+interface FormProdutoProps {
+    messages?: [Alert]
+    setMessages?: (Alert) => void
+}
 
 
 
 
-const FormProduto: React.FC = props => {
+const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props}) => {
     const [sku, setSku] = useState('12345')
     const [productName, setProductName] = useState('')
     const [description, setDescription] = useState('')
@@ -34,19 +40,33 @@ const FormProduto: React.FC = props => {
 
         if(id){
             atualizar(id, produto)
-                .then(_ => console.log("Produto Atualizado com sucesso"))
-                .catch(err => console.log(`Erro ao atualizar o produto: ${err}`))
+                .then(_ => {
+                    setMessages([
+                        {
+                            msgType: "success",
+                            text: "Produto Atualizado com sucesso",
+                        }
+                    ])
+                })
+                .catch(err => {
+                    setMessages([ 
+                        {msgType: "danger", text: "", field: "" }
+                    ])
+                })
         }else{
             console.log(produto)
     
-            const produtoResponse = await salvar(produto)
+            salvar(produto)
+                .then(resp => {
+                    setId(resp.id ? resp.id : 0)
+                    setCadastro(resp.dataCriacao ? resp.dataCriacao : "dd/MM/yyyy");
 
-            console.log(converterEmBigDecimal(`${produto.preco}`))
-    
-            setId(produtoResponse.id ? produtoResponse.id : 0)
-            setCadastro(produtoResponse.dataCriacao ? produtoResponse.dataCriacao : "dd/MM/yyyy");
-    
-            console.log(produtoResponse)
+                    setMessages([{msgType: "success", text: "Produto criado com sucesso"}])
+                })
+                .catch(err => {
+                    setMessages([{msgType: "danger", text: "Erro ao criar o usuário"}])
+                })
+
         }
 
     }
@@ -55,8 +75,6 @@ const FormProduto: React.FC = props => {
     return (
         <Fragment>
             <div className="FormProduto">
-
-                <Message msgType='danger' field="Nome" text='Produto Atualizado com sucesso' />
                 {cadastro && id ? 
                     <div className="columns">
                         <Input labelText="Código:"
