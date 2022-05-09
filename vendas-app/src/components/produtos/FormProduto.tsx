@@ -1,6 +1,5 @@
 import Produto from 'models/produto'
 import React, { ChangeEvent, Fragment, useState } from 'react'
-import ProdutoField from './ProdutoField'
 
 import {converterEmBigDecimal, formatReal} from 'app/utils/money'
 
@@ -19,11 +18,21 @@ interface FormProdutoProps {
 }
 
 
+interface FormErrors {
+    sku?: string
+    nome?: string
+    preco?: string
+    descricao?: string
+}
+
+const msg =  "Campo Obrigatorio";
+
 const validationSchema = yup.object().shape({
-    nome: yup.string().required(),
-    sku: yup.string().required(),
-    preco: yup.number().required(),
-    descricao: yup.string().required()
+    nome: yup.string().trim().required(msg),
+    sku: yup.string().trim().required(msg),
+    preco: yup.number().required(msg).moreThan(0, "O Valor deve ser maior que 0,00"),
+    descricao: yup.string().trim().required(msg)
+        .min(10, "Deve possuir dez caracteres")
 })
 
 
@@ -33,6 +42,7 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
     const [description, setDescription] = useState('')
     const [id, setId] = useState<number>(0.00)
     const [cadastro, setCadastro] = useState<string>("")
+    const [errors, setErrors] = useState<FormErrors>({})
 
     const [price, setPrice] = useState(0.00)
 
@@ -49,6 +59,7 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
 
         validationSchema.validate(produto)
             .then(obj => {
+                setErrors({})
                 if(id){
                     atualizar(id, produto)
                         .then(_ => {
@@ -89,6 +100,10 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
                     {msgType: "danger", text: message, field }
                 ])
 
+                setErrors({
+                    [field]: msg
+                })
+
 
                 console.log(JSON.parse(JSON.stringify(err)))
             })
@@ -120,12 +135,12 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
 
 
                 <div className="columns">
-                    <ProdutoField columnSize="6" value={sku} labelText="SKU" isNumeric={false} placeholder="Digite o sku" onChangeValue={setSku} />
-                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price}  currency maxLength={16} />
+                    <Input columnSize='6' value={sku} labelText="SKU" placeholder="Digite o sku" onChange={setSku} error={errors.sku} />
+                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price} error={errors.preco}  currency maxLength={16} />
                 </div>
 
                 <div className="columns">
-                    <ProdutoField labelText="Nome do Produto" isNumeric={false} placeholder="Digite o nome do produto..." onChangeValue={setProductName} />
+                    <Input title="" labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
                 </div>
 
                 <div className="columns">
@@ -133,6 +148,7 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
                         <label htmlFor="" className="label">Descrição</label>
                         <div className="control">
                             <textarea name="" id="" cols={30} rows={10} className="textarea" value={description} onChange={e => setDescription(e.target.value)} ></textarea>
+                            {errors.descricao && <p className='help is-danger'>{errors.descricao}</p>}
                         </div>
                     </div>
                 </div>

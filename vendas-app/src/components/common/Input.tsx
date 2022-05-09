@@ -6,11 +6,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     columnSize?: string
     onChange?: (value) => void;
     currency? : boolean
+    error?: string
 }
 
 
 
-const Input: React.FC<InputProps> = ({columnSize, labelText, currency,  ...props}) => {
+const Input: React.FC<InputProps> = ({columnSize, labelText, currency,error,  ...props}) => {
 
     const onInputChange = (event) => {
         let value = event.target.value
@@ -31,6 +32,9 @@ const Input: React.FC<InputProps> = ({columnSize, labelText, currency,  ...props
     
                 <div className="control">
                     <input className="input" placeholder={props.placeholder} value={props.value}  {...props} onChange={onInputChange}  />
+                    {error && 
+                        <p className="help is-danger">{error}</p>
+                    }
                 </div>
             </div>
         </Fragment>
