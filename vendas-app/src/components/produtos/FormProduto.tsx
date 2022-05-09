@@ -164,11 +164,11 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
                     </div>
 
                     <div className="control">
-                        <button className="button is-danger">
-                            <Link href="/">
-                                voltar
-                            </Link>
-                        </button>
+                        <Link href="/consultas/produtos">
+                            <button className="button">
+                                Voltar
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
