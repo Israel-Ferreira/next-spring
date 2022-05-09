@@ -5,6 +5,8 @@ import ProdutoField from './ProdutoField'
 import {converterEmBigDecimal, formatReal} from 'app/utils/money'
 
 import Link from 'next/link'
+import * as yup from 'yup';
+
 import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
 import ActionButtonForm from './ActionButtonForm'
@@ -17,6 +19,12 @@ interface FormProdutoProps {
 }
 
 
+const validationSchema = yup.object().shape({
+    nome: yup.string().required(),
+    sku: yup.string().required(),
+    preco: yup.number().required(),
+    descricao: yup.string().required()
+})
 
 
 const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props}) => {
@@ -38,36 +46,52 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
             sku
         }
 
-        if(id){
-            atualizar(id, produto)
-                .then(_ => {
-                    setMessages([
-                        {
-                            msgType: "success",
-                            text: "Produto Atualizado com sucesso",
-                        }
-                    ])
-                })
-                .catch(err => {
-                    setMessages([ 
-                        {msgType: "danger", text: "", field: "" }
-                    ])
-                })
-        }else{
-            console.log(produto)
-    
-            salvar(produto)
-                .then(resp => {
-                    setId(resp.id ? resp.id : 0)
-                    setCadastro(resp.dataCriacao ? resp.dataCriacao : "dd/MM/yyyy");
 
-                    setMessages([{msgType: "success", text: "Produto criado com sucesso"}])
-                })
-                .catch(err => {
-                    setMessages([{msgType: "danger", text: "Erro ao criar o usuário"}])
-                })
+        validationSchema.validate(produto)
+            .then(obj => {
+                if(id){
+                    atualizar(id, produto)
+                        .then(_ => {
+                            setMessages([
+                                {
+                                    msgType: "success",
+                                    text: "Produto Atualizado com sucesso",
+                                }
+                            ])
+                        })
+                        .catch(err => {
+                            setMessages([ 
+                                {msgType: "danger", text: "", field: "" }
+                            ])
+                        })
+                }else{
+                    console.log(produto)
+            
+                    salvar(produto)
+                        .then(resp => {
+                            setId(resp.id ? resp.id : 0)
+                            setCadastro(resp.dataCriacao ? resp.dataCriacao : "dd/MM/yyyy");
+        
+                            setMessages([{msgType: "success", text: "Produto criado com sucesso"}])
+                        })
+                        .catch(err => {
+                            setMessages([{msgType: "danger", text: "Erro ao criar o usuário"}])
+                        })
+        
+                }
 
-        }
+            })
+            .catch(err => {
+                const field = err.path
+                const { message} = err
+
+                setMessages([
+                    {msgType: "danger", text: message, field }
+                ])
+
+
+                console.log(JSON.parse(JSON.stringify(err)))
+            })
 
     }
 

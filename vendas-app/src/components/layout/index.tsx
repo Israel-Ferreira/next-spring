@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = props => (
                     <Card cardHeaderTitle={props.title ? props.title : "Vendas"}>
                         {props.messages && props.messages.map(msg => (
                             <>
-                                <Message {...msg} />
+                                <Message key={msg.text} {...msg} />
                             </>
                         ))}
                         {props.children}
