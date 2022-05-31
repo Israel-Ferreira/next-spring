@@ -15,7 +15,13 @@ export const useProdutoService = () => {
         const updateUri =  `${resourceUrl}/${id}`
         await httpClient.put(updateUri, produto)
     }
+
+
+    const getProduto = async (id) : Promise<Produto>  => {
+        const response : AxiosResponse<Produto> = await httpClient.get(`${resourceUrl}/${id}`)
+        return await response.data
+    }
     
 
-    return {salvar, atualizar}
+    return {salvar, atualizar, getProduto}
 }

@@ -1,5 +1,5 @@
 import Produto from 'models/produto'
-import React, { ChangeEvent, Fragment, useState } from 'react'
+import React, { ChangeEvent, Fragment, useEffect, useState } from 'react'
 
 import {converterEmBigDecimal, formatReal} from 'app/utils/money'
 
@@ -10,6 +10,9 @@ import { useProdutoService } from 'app/services'
 import Input from 'components/common/Input'
 import ActionButtonForm from './ActionButtonForm'
 import Message, { Alert } from 'components/common/Mensagem'
+
+
+import {useRouter} from 'next/router'
 
 
 interface FormProdutoProps {
@@ -44,9 +47,34 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
     const [cadastro, setCadastro] = useState<string>("")
     const [errors, setErrors] = useState<FormErrors>({})
 
-    const [price, setPrice] = useState(0.00)
+    const [price, setPrice] = useState('')
+    const router = useRouter()
 
-    const { salvar, atualizar } = useProdutoService()
+    const { id: productId }  = router.query;
+
+    const { salvar, atualizar, getProduto } = useProdutoService()
+
+
+    useEffect(() => {
+        const produto  = getProduto(productId)
+
+        if(productId){
+            produto.then(prd => {
+                setSku(prd.sku)
+                setCadastro(prd.dataCriacao)
+                setId(prd.id)
+
+        
+    
+                setPrice(formatReal(`${prd.preco}`))
+                setProductName(prd.nome)
+                setDescription(prd.descricao)
+            })
+            
+        }
+
+    },[productId])
+
 
     const submit = async () => {
         const produto: Produto = {
@@ -140,7 +168,7 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
                 </div>
 
                 <div className="columns">
-                    <Input title="" labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
+                    <Input title="" value={productName} labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
                 </div>
 
                 <div className="columns">
