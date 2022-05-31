@@ -5,14 +5,17 @@ import {Layout} from 'components/layout'
 import { ProductsTable } from './ProductsTable'
 import Produto from 'models/produto'
 
+import useSWR from 'swr'
+import { httpClient } from 'app/client'
+import { AxiosResponse } from 'axios'
+
 const ListagemProdutos : React.FC = props => {
 
-    const produtos : Produto[] = [
-        {id: 2, nome: "Televisão Samsung QLED 75 Pol. Smart Tv Tizen 8K", sku: "ZXNQ490", descricao: "", preco: 8000},
-        {id: 3, nome: "Televisão Samsung QLED 75 Pol. Smart Tv Tizen 8K", sku: "ZXNQ490", descricao: "", preco: 8000},
-        {id: 4, nome: "Televisão Samsung QLED 75 Pol. Smart Tv Tizen 8K", sku: "ZXNQ490", descricao: "", preco: 8000},
-        {id: 5, nome: "Televisão Samsung QLED 75 Pol. Smart Tv Tizen 8K", sku: "ZXNQ490", descricao: "", preco: 8000}
-    ]
+    const { data : result, error } = useSWR<AxiosResponse<Produto[]>>('/api/produtos', url => httpClient.get(url) )
+
+    if(!result){
+        return <div>Carregando</div>
+    }
 
     return (
         <Layout title='Produtos'>
@@ -23,7 +26,7 @@ const ListagemProdutos : React.FC = props => {
             </Link>
             <br />
 
-            <ProductsTable products={produtos} />
+            <ProductsTable products={result.data} />
         </Layout>
     )
 }
