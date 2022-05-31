@@ -15,6 +15,14 @@ const ListagemProdutos : React.FC = props => {
 
     const { data : result, error } = useSWR<AxiosResponse<Produto[]>>('/api/produtos', url => httpClient.get(url) )
 
+    const onEdit = (produto : Produto) => {
+        console.log(produto)
+    }
+
+    const onDelete = (produto: Produto) => {
+        console.log(produto)
+    }
+
 
     return (
         <Layout title='Produtos'>
@@ -24,9 +32,10 @@ const ListagemProdutos : React.FC = props => {
                 </button>
             </Link>
             <br />
+            <br />
             <Loader show={!result} />
 
-            <ProductsTable products={result?.data || []} />
+            <ProductsTable products={result?.data || []} onDelete={onDelete} onEdit={onEdit} />
         </Layout>
     )
 }

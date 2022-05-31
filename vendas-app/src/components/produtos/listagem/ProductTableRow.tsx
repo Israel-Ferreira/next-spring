@@ -3,10 +3,12 @@ import Produto from 'models/produto'
 
 interface ProductTableRowProps {
     produto: Produto
+    onEdit: (produto : Produto) => void
+    onDelete: (produto : Produto) => void
 }
 
 
-export const ProductTableRow : React.FC<ProductTableRowProps> = ({produto}) => {
+export const ProductTableRow : React.FC<ProductTableRowProps> = ({produto, onDelete, onEdit}) => {
     return (
         <Fragment>
             <tr>
@@ -15,8 +17,12 @@ export const ProductTableRow : React.FC<ProductTableRowProps> = ({produto}) => {
                 <td>{produto.nome}</td>
                 <td>{produto.preco}</td>
                 <td>
-                    <button className='button is-success'>Editar</button>
-                    <button className='button is-danger'>Excluir</button>
+                    <button onClick={e => onEdit(produto) } className='button is-success is-rounded is-small'>
+                        Editar
+                    </button>
+                    <button onClick={e => onDelete(produto) } className='button is-danger is-rounded is-small'>
+                        Excluir
+                    </button>
                 </td>
             </tr>
         </Fragment>

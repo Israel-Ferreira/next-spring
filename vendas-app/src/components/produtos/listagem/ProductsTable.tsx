@@ -5,9 +5,11 @@ import { ProductTableRow } from './ProductTableRow'
 
 interface ProductsTableProps {
     products: Produto[]
+    onEdit: (produto : Produto) => void
+    onDelete: (produto : Produto) => void
 }
 
-export const ProductsTable : React.FC<ProductsTableProps> = ({products}) => {
+export const ProductsTable : React.FC<ProductsTableProps> = ({products, onDelete, onEdit}) => {
     return (
         <Fragment>
             <table className="table is-fullwidth is-striped is-hoverable">
@@ -20,7 +22,7 @@ export const ProductsTable : React.FC<ProductsTableProps> = ({products}) => {
                 </thead>
                 <tbody>
                     {
-                        products.map(product => <ProductTableRow key={product.id} produto={product} />)
+                        products.map(product => <ProductTableRow onDelete={onDelete} onEdit={onEdit} key={product.id} produto={product} />)
                     }
                 </tbody>
                 <tfoot></tfoot>
