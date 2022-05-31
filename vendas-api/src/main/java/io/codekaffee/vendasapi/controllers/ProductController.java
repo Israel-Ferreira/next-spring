@@ -34,7 +34,8 @@ public class ProductController {
 
 
     @GetMapping
-    public ResponseEntity<List<ProductResp>> listProducts() {
+    public ResponseEntity<List<ProductResp>> listProducts() throws InterruptedException {
+        
         List<ProductResp> products =  getProductService.listProducts().stream()
                 .map(ProductResp::new).collect(Collectors.toList());
 

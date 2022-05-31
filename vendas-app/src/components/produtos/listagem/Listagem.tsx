@@ -9,13 +9,12 @@ import useSWR from 'swr'
 import { httpClient } from 'app/client'
 import { AxiosResponse } from 'axios'
 
+import Loader from 'components/common/loader'
+
 const ListagemProdutos : React.FC = props => {
 
     const { data : result, error } = useSWR<AxiosResponse<Produto[]>>('/api/produtos', url => httpClient.get(url) )
 
-    if(!result){
-        return <div>Carregando</div>
-    }
 
     return (
         <Layout title='Produtos'>
@@ -25,8 +24,9 @@ const ListagemProdutos : React.FC = props => {
                 </button>
             </Link>
             <br />
+            <Loader show={!result} />
 
-            <ProductsTable products={result.data} />
+            <ProductsTable products={result?.data || []} />
         </Layout>
     )
 }
