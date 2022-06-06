@@ -168,7 +168,7 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
                 </div>
 
                 <div className="columns">
-                    <Input title="" value={productName} labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
+                    <Input  value={productName} labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
                 </div>
 
                 <div className="columns">

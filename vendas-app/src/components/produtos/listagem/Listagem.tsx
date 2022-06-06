@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import {useRouter} from "next/router"
@@ -12,8 +12,14 @@ import { httpClient } from 'app/client'
 import { AxiosResponse } from 'axios'
 
 import Loader from 'components/common/loader'
+import { useProdutoService } from 'app/services'
+import { Alert } from 'components/common/Mensagem'
 
 const ListagemProdutos : React.FC = props => {
+    const [messages, setMessages] = useState<Array<Alert>>([])
+
+    const {deletar} = useProdutoService()
+    const [lista, setLista] = useState<Produto[]>([])
     
     const router = useRouter()
     const { data : result, error } = useSWR<AxiosResponse<Produto[]>>('/api/produtos', url => httpClient.get(url) )
@@ -24,13 +30,32 @@ const ListagemProdutos : React.FC = props => {
         router.push(url)
     }
 
+
+    useEffect(() => {
+        setLista(result?.data || [])
+    }, [result])
+
+
     const onDelete = (produto: Produto) => {
-        console.log(produto)
+        deletar(produto.id)
+            .then(response => {
+                setMessages([{
+                    msgType: "success",
+                    text: "Produto deletado com sucesso"
+                }])
+
+                const listaAtualizada : Produto[] = lista?.filter(prod => prod.id !== produto.id)
+                setLista(listaAtualizada)
+            })
+            .catch(err => setMessages([{
+                msgType: "danger",
+                text: "Erro ao deletar o produto"
+            }]))
     }
 
 
     return (
-        <Layout title='Produtos'>
+        <Layout title='Produtos' messages={messages}>
             <Link href={'/cadastros/produtos'}>
                 <button className='button is-warning'>
                     Novo Produto
@@ -40,7 +65,7 @@ const ListagemProdutos : React.FC = props => {
             <br />
             <Loader show={!result} />
 
-            <ProductsTable products={result?.data || []} onDelete={onDelete} onEdit={onEdit} />
+            <ProductsTable products={lista} onDelete={onDelete} onEdit={onEdit} />
         </Layout>
     )
 }
