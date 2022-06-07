@@ -56,9 +56,9 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
 
 
     useEffect(() => {
-        const produto  = getProduto(productId)
-
         if(productId){
+            const produto  = getProduto(productId)
+
             produto.then(prd => {
                 setSku(prd.sku)
                 setCadastro(prd.dataCriacao)
