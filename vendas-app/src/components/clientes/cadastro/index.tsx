@@ -3,8 +3,8 @@ import React from 'react'
 
 export const CadastroCliente : React.FC = () => {
     return (
-        <Layout>
-            
+        <Layout title="Clientes">
+
         </Layout>
     )
 }
