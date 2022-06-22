@@ -36,6 +36,14 @@ public class ClienteService {
     }
 
 
+    public void deleteById(Long id){
+        Cliente cliente =  repository.findById(id)
+                .orElseThrow(NotFoundException::new);
+
+        repository.delete(cliente);
+    }
+
+
     public void atualizarCliente(Long id, ClienteFormRequest clienteFormRequest){
         Optional<Cliente> clienteDb =  repository.findById(id);
 

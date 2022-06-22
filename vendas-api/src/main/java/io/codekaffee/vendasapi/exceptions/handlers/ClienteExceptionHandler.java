@@ -20,6 +20,8 @@ public class ClienteExceptionHandler {
         Set<String> violations = exception.getViolations().stream().map(ConstraintViolation::getMessage)
                 .collect(Collectors.toSet());
 
+        System.out.println(exception.getMessage());
+
         ErrorMsg  errorMsg = new ErrorMsg();
         errorMsg.setMsg(exception.getMessage());
         errorMsg.setViolations(violations);

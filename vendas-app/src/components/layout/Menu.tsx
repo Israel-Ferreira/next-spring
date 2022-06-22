@@ -11,8 +11,8 @@ const Menu: React.FC<MenuProps> = (props) => (
             <p className="menu-label is-hidden-touch">{props.title}</p>
             <ul className="menu-list">
                 <MenuItem subtitle="Home" iconClass="" pathLink="/" />
-                <MenuItem subtitle="Produtos" iconClass="" pathLink="/cadastros/produtos" />
-                <MenuItem subtitle="Clientes" iconClass="" pathLink="/" />
+                <MenuItem subtitle="Produtos" iconClass="" pathLink="/consultas/produtos" />
+                <MenuItem subtitle="Clientes" iconClass="" pathLink="/cadastros/clientes" />
                 <MenuItem subtitle="Produtos" iconClass="" pathLink="/" />
                 <MenuItem subtitle="Config" iconClass="" pathLink="/" />
                 <MenuItem subtitle="Sair" iconClass="" pathLink="/" />
