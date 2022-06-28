@@ -163,12 +163,12 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
 
 
                 <div className="columns">
-                    <Input columnSize='6' value={sku} labelText="SKU" placeholder="Digite o sku" onChange={setSku} error={errors.sku} />
-                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={setPrice} value={price} error={errors.preco}  currency maxLength={16} />
+                    <Input columnSize='6' value={sku} labelText="SKU" placeholder="Digite o sku" onChange={e => setSku(e.target.value)} error={errors.sku} />
+                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={e => setPrice(formatReal(e.target.value))} value={price} error={errors.preco}  currency maxLength={16} />
                 </div>
 
                 <div className="columns">
-                    <Input  value={productName} labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={setProductName} error={errors.nome} />
+                    <Input  value={productName} labelText='Nome do Produto' placeholder="Digite o nome do produto..." onChange={e => setProductName(e.target.value)} error={errors.nome} />
                 </div>
 
                 <div className="columns">
