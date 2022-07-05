@@ -13,6 +13,7 @@ import Message, { Alert } from 'components/common/Mensagem'
 
 
 import {useRouter} from 'next/router'
+import { MoneyInput } from 'components/common/input/MoneyInput';
 
 
 interface FormProdutoProps {
@@ -164,7 +165,8 @@ const FormProduto: React.FC<FormProdutoProps> = ({setMessages,messages, ...props
 
                 <div className="columns">
                     <Input columnSize='6' value={sku} labelText="SKU" placeholder="Digite o sku" onChange={e => setSku(e.target.value)} error={errors.sku} />
-                    <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={e => setPrice(formatReal(e.target.value))} value={price} error={errors.preco}  currency maxLength={16} />
+                    <MoneyInput  labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={e => setPrice(e.target.value)}  value={price} error={errors.preco}  maxLength={16} />
+                    {/* <Input labelText="Preço" columnSize='6' placeholder='Digite o preço' onChange={e => setPrice(e.target.value)} formatter={formatReal} value={price} error={errors.preco}  maxLength={16} /> */}
                 </div>
 
                 <div className="columns">

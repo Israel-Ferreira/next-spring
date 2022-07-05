@@ -2,11 +2,9 @@ package io.codekaffee.vendasapi.services;
 
 import io.codekaffee.vendasapi.dto.ClienteFormRequest;
 import io.codekaffee.vendasapi.exceptions.CreateClientBadRequestException;
-import io.codekaffee.vendasapi.exceptions.CreateProductBadRequestException;
 import io.codekaffee.vendasapi.exceptions.NotFoundException;
 import io.codekaffee.vendasapi.models.Cliente;
 import io.codekaffee.vendasapi.repositories.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Validator;
@@ -19,7 +17,6 @@ public class ClienteService {
     private final ClienteRepository repository;
     private final Validator validator;
 
-    @Autowired
     public ClienteService(ClienteRepository repository, Validator validator) {
         this.repository = repository;
         this.validator = validator;

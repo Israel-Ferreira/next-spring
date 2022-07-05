@@ -1,8 +1,6 @@
 package io.codekaffee.vendasapi.exceptions;
 
 import io.codekaffee.vendasapi.dto.ClienteFormRequest;
-import io.codekaffee.vendasapi.dto.ProductFormRequest;
-
 import javax.validation.ConstraintViolation;
 import java.util.LinkedHashSet;
 import java.util.Set;

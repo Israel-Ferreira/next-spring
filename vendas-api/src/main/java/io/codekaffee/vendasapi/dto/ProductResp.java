@@ -1,7 +1,6 @@
 package io.codekaffee.vendasapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.codekaffee.vendasapi.models.Produto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +21,8 @@ public class ProductResp {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
 
+
+
     public ProductResp(Produto produto) {
         this.id = produto.getId();
         this.nome = produto.getNome();
@@ -30,4 +31,5 @@ public class ProductResp {
         this.preco = produto.getPreco();
         this.dataCriacao = produto.getDataCadastro();
     }
+    
 }

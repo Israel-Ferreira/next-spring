@@ -1,25 +1,32 @@
 import { formatReal } from 'app/utils/money';
 import React, { ChangeEventHandler, Fragment, InputHTMLAttributes } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelText: string;
     columnSize?: string
-    onChange?: (value) => void;
-    currency? : boolean
     error?: string
+    formatter?: (value: string) => string;
 }
 
 
 
-const Input: React.FC<InputProps> = ({columnSize, labelText, currency,error,   ...props}) => {
+const Input: React.FC<InputProps> = ({columnSize, labelText,error, formatter, onChange,   ...props}) => {
 
-    const onInputChange = (event) => {
-        let value = event.target.value
+    const onInputChange =  (event) => {
+        const value = event.target.value
+        const name = event.target.name;
 
-        if(value && currency) {
-            value = formatReal(value)
-        }
+        const formattedValue = (formatter && formatter(value as string)) || value;
+
+        onChange({
+            ...event,
+            target: {
+                name,
+                value: formattedValue,
+            }
+        })
     }
+
 
     return (
         <Fragment>
@@ -27,7 +34,7 @@ const Input: React.FC<InputProps> = ({columnSize, labelText, currency,error,   .
                 <label className="label">{props.required ? `${labelText} *` : `${labelText}` }</label>
     
                 <div className="control">
-                    <input className="input" placeholder={props.placeholder} value={props.value}  {...props}  />
+                    <input className="input" placeholder={props.placeholder} onChange={onInputChange} value={props.value}  {...props}  />
                     {error && 
                         <p className="help is-danger">{error}</p>
                     }
